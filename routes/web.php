@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlanController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +25,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
    
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('user.profile');
 Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'store'])->name('user.profile.store');
+
+Route::get('plans', [PlanController::class, 'index'])->name("plans");
+
+Route::middleware("auth")->group(function () {
+    Route::get('plans/{plan}', [PlanController::class, 'show'])->name("plans.show");
+    Route::post('subscription', [PlanController::class, 'subscription'])->name("subscription.create");
+});
